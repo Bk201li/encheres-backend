@@ -1,7 +1,20 @@
 from rest_framework import serializers
-from .models import Members
+from .models import User
 
-class MembersSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Members
+        model = User
         fields = '__all__'
+        extra_kwargs = {
+            'password': {
+                'write_only': True,
+            }
+        }
+
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
+        instance = self.Meta.model.create_user(**validated_data)
+        if password is not None:
+            instance.set_password(password)
+        instance.save()
+        return instance

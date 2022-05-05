@@ -1,11 +1,29 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import MembersSerializer
+from rest_framework.exceptions import AuthenticationFailed
+from .serializers import UserSerializer
+from .models import User
 
 # Create your views here.
 class RegisterView(APIView):
     def post(self, request):
-        serializer = MembersSerializer(data=request.data)
+        serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+class LoginView(APIView):
+    def post(self, request):
+        email = request.data['email']
+        password = request.data['password']
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise AuthenticationFailed('User not found!')
+        
+        if not user.check_password(password):
+            raise AuthenticationFailed('Incorrect password!')
+
+        return Response({
+            'message': 'Login success!',
+        })
