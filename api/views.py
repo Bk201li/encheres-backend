@@ -1,8 +1,25 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from .serializers import ProductSerializer
 from .models import Product
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['email'] = user.email
+        # ...
+
+        return token
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 @api_view(["GET"])
 def get_routes(request):
@@ -74,6 +91,7 @@ def get_products(request):
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def get_product(request, pk):
     product = Product.objects.get(id=pk)
     serializer = ProductSerializer(product, many=False)
@@ -81,6 +99,7 @@ def get_product(request, pk):
 
 
 @api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def create_product(request):
     data = request.data
 
@@ -92,6 +111,7 @@ def create_product(request):
 
 
 @api_view(["PUT"])
+@permission_classes([IsAuthenticated])
 def update_product(request, pk):
     data = request.data
 
@@ -104,6 +124,7 @@ def update_product(request, pk):
 
 
 @api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
 def delete_product(request, pk):
     product = Product.objects.get(id=pk)
     product.delete()
