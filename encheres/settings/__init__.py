@@ -24,18 +24,10 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 SECRET_KEY = 'django-insecure-a6gc*&8)r+w$2e03)o2@m$&u_t-713i*wfu!)!9pn6ynh+=+ju'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = False
 
-<<<<<<< HEAD
-ALLOWED_HOSTS = ['*']
-=======
-<<<<<<< HEAD
 ALLOWED_HOSTS = ["encheres-backend.herokuapp.com", "127.0.0.1"]
-=======
-ALLOWED_HOSTS = ["*"]
->>>>>>> 8946826f80190cfc78a81fbd97283439a2a7a705
->>>>>>> 000476fb0d66512e2db21bf796d8cd1c4e6fe96e
-
 
 # Application definition
 
@@ -54,16 +46,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-<<<<<<< HEAD
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-=======
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -73,7 +55,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
->>>>>>> 000476fb0d66512e2db21bf796d8cd1c4e6fe96e
 ]
 
 ROOT_URLCONF = 'encheres.urls'
@@ -150,18 +131,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-<<<<<<< HEAD
-STATIC_URL = '/static/'
-=======
-<<<<<<< HEAD
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-=======
->>>>>>> 8946826f80190cfc78a81fbd97283439a2a7a705
-STATIC_URL = "/static/"
->>>>>>> 000476fb0d66512e2db21bf796d8cd1c4e6fe96e
-
-MEDIA_URL = '/images/'
+STATIC_URL = '/static/'
 
 STARTICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
