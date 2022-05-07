@@ -8,6 +8,18 @@ from .models import Product
 def get_routes(request):
     routes = [
         {
+            "Enpoint": "/token/",
+            "method": "GET",
+            "body": None,
+            "description": "Get the refresh and acess tokens",
+        },
+        {
+            "Enpoint": "/token/refresh/",
+            "method": "POST",
+            "body": None,
+            "description": "Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.",
+        },
+        {
             "Enpoint": "/products/",
             "method": "GET",
             "body": None,
@@ -44,22 +56,10 @@ def get_routes(request):
             "description": "Register a user",
         },
         {
-            "Enpoint": "/members/login",
-            "method": "POST",
-            "body": {"email": "", "password": ""},
-            "description": "Login a user",
-        },
-        {
-            "Enpoint": "/members/logout",
-            "method": "POST",
-            "body": None,
-            "description": "Logout the current user deleting JWT token in cookies",
-        },
-        {
             "Enpoint": "/members/user",
             "method": "GET",
             "body": None,
-            "description": "Returns the current user getting JWT token in cookies",
+            "description": "Returns the current user",
         },
     ]
 
