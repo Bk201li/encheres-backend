@@ -94,6 +94,12 @@ def get_routes(request):
             "body": None,
             "description": "Returns the current user",
         },
+        {
+            "Enpoint": "/members/id/update/",
+            "method": "PUT",
+            "body": {"email": "", "password": ""},
+            "description": "Update a user",
+        },
     ]
 
     return Response(routes)
