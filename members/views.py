@@ -13,48 +13,6 @@ def register_user(request):
     serializer.save()
     return Response(serializer.data)
 
-
-@api_view(["POST"])
-def login_user(request): 
-    email = request.data['email']
-    password = request.data['password']
-    try:
-        user = User.objects.get(email=email)
-    except User.DoesNotExist:
-        raise AuthenticationFailed('User not found!')
-    
-    if not user.check_password(password):
-        raise AuthenticationFailed('Incorrect password!')
-
-    payload = {
-        'id': user.id,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-        'iat': datetime.datetime.utcnow()
-    }
-
-    token = jwt.encode(payload, 'secret', algorithm='HS256')
-    
-    response = Response()
-
-    response.set_cookie(key='jwt', value=token, httponly=True)
-    response.data = {
-        'jwt': token
-    }
-
-    return response
-
-
-@api_view(["POST"])
-def logout_user(request):
-    response = Response()
-    response.delete_cookie('jwt')
-    response.data = {
-        'message': 'User logged out!'
-    }
-
-    return response
-
-
 @api_view(["GET"])
 def get_user(request):
     token = request.COOKIES.get('jwt')
