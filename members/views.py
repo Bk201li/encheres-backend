@@ -20,5 +20,12 @@ def get_user(request):
 
 @api_view(["PUT"])
 # @permission_classes([IsAuthenticated])
-def update_user(request):
-    pass   
+def update_user(request, pk):
+    data = request.data
+
+    user = User.objects.get(id=pk)
+    serializer = UserSerializer(user, data=data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)

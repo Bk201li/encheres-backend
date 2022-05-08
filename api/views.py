@@ -45,13 +45,13 @@ def get_routes(request):
             "description": "Get all products",
         },
         {
-            "Enpoint": "/products/id",
+            "Enpoint": "/products/id/",
             "method": "GET",
             "body": None,
             "description": "Returns a single product",
         },
         {
-            "Enpoint": "/products/create",
+            "Enpoint": "/products/create/",
             "method": "POST",
             "body": {
                 "name": "",
@@ -64,7 +64,7 @@ def get_routes(request):
             "description": "Create a product",
         },
         {
-            "Enpoint": "/products/id/update",
+            "Enpoint": "/products/id/update/",
             "method": "PUT",
             "body": {
                 "name": "",
@@ -77,19 +77,19 @@ def get_routes(request):
             "description": "Update a product",
         },
         {
-            "Enpoint": "/products/id/delete",
+            "Enpoint": "/products/id/delete/",
             "method": "DELETE",
             "body": None,
             "description": "Delete a product",
         },
         {
-            "Enpoint": "/members/register",
+            "Enpoint": "/members/register/",
             "method": "POST",
             "body": {"email": "", "password": ""},
             "description": "Register a user",
         },
         {
-            "Enpoint": "/members/user",
+            "Enpoint": "/members/user/",
             "method": "GET",
             "body": None,
             "description": "Returns the current user",
@@ -131,7 +131,7 @@ def update_product(request, pk):
     data = request.data
 
     product = Product.objects.get(id=pk)
-    serializer = ProductSerializer(product, data=request.POST)
+    serializer = ProductSerializer(product, data=data)
     if serializer.is_valid():
         serializer.save()
 
