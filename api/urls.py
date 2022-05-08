@@ -15,5 +15,5 @@ urlpatterns = [
     path('products/<str:pk>/update/', views.update_product),
     path('products/<str:pk>/delete/', views.delete_product),
     path('products/<str:pk>/', views.get_product),
-    path('auctions/create/', views.create_auctions),
+    path('auctions/create/', views.create_auction),
 ]
