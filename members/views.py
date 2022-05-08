@@ -24,7 +24,7 @@ def update_user(request, pk):
     data = request.data
 
     user = User.objects.get(id=pk)
-    serializer = UserSerializer(user, data=data)
+    serializer = UserSerializer(user, data=request.POST)
     if serializer.is_valid():
         serializer.save()
 

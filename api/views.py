@@ -131,7 +131,7 @@ def update_product(request, pk):
     data = request.data
 
     product = Product.objects.get(id=pk)
-    serializer = ProductSerializer(product, data=data)
+    serializer = ProductSerializer(product, data=request.POST)
     if serializer.is_valid():
         serializer.save()
 
