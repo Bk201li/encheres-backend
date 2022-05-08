@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, AuctionSerializer
 from .models import Product
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -77,6 +77,12 @@ def get_routes(request):
             "description": "Update a product",
         },
         {
+            "Enpoint": "/auctions/create/",
+            "method": "POST",
+            "body": {"Product": "", "end": "False"},
+            "description": "Delete a product",
+        },
+        {
             "Enpoint": "/products/id/delete/",
             "method": "DELETE",
             "body": None,
@@ -145,3 +151,11 @@ def delete_product(request, pk):
     product = Product.objects.get(id=pk)
     product.delete()
     return Response("Product deleted successfully")
+
+@api_view(["POST"])
+# @permission_classes([IsAuthenticated])
+def create_auction(request):
+    serializer = AuctionSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data)
