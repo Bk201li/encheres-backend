@@ -116,22 +116,17 @@ def get_product(request, pk):
 @api_view(["POST"])
 # @permission_classes([IsAuthenticated])
 def create_product(request):
-    data = request.data
-
-    product = Product.objects.create(
-        body=data["body"],
-    )
-    serializer = ProductSerializer(product, many=False)
+    serializer = ProductSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
     return Response(serializer.data)
 
 
 @api_view(["PUT"])
 # @permission_classes([IsAuthenticated])
 def update_product(request, pk):
-    data = request.data
-
     product = Product.objects.get(id=pk)
-    serializer = ProductSerializer(product, data=request.POST)
+    serializer = ProductSerializer(product, data=request.data)
     if serializer.is_valid():
         serializer.save()
 
