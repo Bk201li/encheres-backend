@@ -1,9 +1,8 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.permissions import IsAuthenticated
 from .serializers import UserSerializer
 from .models import User
-import jwt, datetime
 
 
 @api_view(["POST"])
@@ -15,17 +14,11 @@ def register_user(request):
 
 @api_view(["GET"])
 def get_user(request):
-    token = request.COOKIES.get('jwt')
-
-    if not token:
-        raise AuthenticationFailed('User not logged in!')
-    
-    try:
-        payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-    except jwt.ExpiredSignatureError:
-        raise AuthenticationFailed('User not logged in!')
-
-    user = User.objects.get(id=payload['id'])
+    user = request.user
     serializer = UserSerializer(user)
+    return Response(serializer.data) 
 
-    return Response(serializer.data)   
+@api_view(["PUT"])
+# @permission_classes([IsAuthenticated])
+def update_user(request):
+    pass   

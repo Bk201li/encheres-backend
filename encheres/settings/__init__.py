@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
 
+    # 'encheres.middleware.auction_middleware',
     'api.apps.ApiConfig',
     'api.apps.MembersConfig',
 ]
